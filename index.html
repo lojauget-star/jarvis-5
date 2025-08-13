@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jarvis AI</title>
+    
+    <!-- PWA Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="apple-touch-icon" href="/icon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'jarvis-bg': '#0a0a0f',
+              'jarvis-blue': '#00f2ff',
+              'jarvis-dark-blue': '#0c3a5e',
+              'jarvis-gray': '#1a2a3a',
+            },
+            boxShadow: {
+              'glow-blue': '0 0 15px 5px rgba(0, 242, 255, 0.4), 0 0 5px 1px rgba(0, 242, 255, 0.6)',
+              'glow-blue-light': '0 0 8px 2px rgba(0, 242, 255, 0.3)',
+            },
+            fontFamily: {
+              'sans': ['system-ui', 'sans-serif'],
+              'mono': ['monospace'],
+            },
+            keyframes: {
+                pulse: {
+                    '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                    '50%': { transform: 'scale(1.05)', opacity: '0.8' },
+                },
+                speaking: {
+                    '0%, 100%': { filter: 'brightness(1)' },
+                    '50%': { filter: 'brightness(1.25)' },
+                },
+                fadeIn: {
+                    'from': { opacity: '0', transform: 'translateY(10px)' },
+                    'to': { opacity: '1', transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                pulse: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                speaking: 'speaking 2s ease-in-out infinite',
+                'fade-in': 'fadeIn 0.5s ease-out forwards',
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.13.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "lucide-react": "https://esm.sh/lucide-react@^0.539.0"
+  }
+}
+</script>
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-jarvis-bg">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
